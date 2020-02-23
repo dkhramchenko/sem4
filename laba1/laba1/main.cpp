@@ -33,7 +33,7 @@ int main()
 		b[k] = 0;
 		for (int i = 0; i < 12; i++)
 		{
-			b[k] += pow(y[i], k);
+			b[k] += pow(x[i], k) * y[i];
 		}
 	}
 	
@@ -166,7 +166,20 @@ int main()
 	cout << "a_2 = " << a[2] << endl << "a_3 = " << a[3] << endl;
 	cout << "delta = " << delta;
 
+	for (int i = 0; i < 4)
+	{
+		delete[] m[i];
+		delete[] m0[i];
+		delete[] m1[i];
+		delete[] m2[i];
+		delete[] m3[i];
+	}
 
+	delete[] m;
+	delete[] m0;
+	delete[] m1;
+	delete[] m2;
+	delete[] m3;
 	
 	return 0;
 }
