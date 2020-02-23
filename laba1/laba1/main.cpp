@@ -60,6 +60,11 @@ int main()
 	m[3][2] = c[5];
 	m[3][3] = c[6];
 
+	double** m0 = new double* [4];
+	for (int i = 0; i < 4; ++i)
+	{
+		m0[i] = new double[4];
+	}
 	m0[0][0] = b[0];
 	m0[0][1] = b[1];
 	m0[0][2] = b[2];
@@ -77,6 +82,11 @@ int main()
 	m0[3][2] = c[5];
 	m0[3][3] = c[6];
 
+	double** m1 = new double* [4];
+	for (int i = 0; i < 4; ++i)
+	{
+		m1[i] = new double[4];
+	}
 	m1[0][0] = c[0];
 	m1[0][1] = c[1];
 	m1[0][2] = c[2];
@@ -94,6 +104,11 @@ int main()
 	m1[3][2] = c[5];
 	m1[3][3] = c[6];
 
+	double** m2 = new double* [4];
+	for (int i = 0; i < 4; ++i)
+	{
+		m2[i] = new double[4];
+	}
 	m2[0][0] = c[0];
 	m2[0][1] = c[1];
 	m2[0][2] = c[2];
@@ -111,6 +126,11 @@ int main()
 	m2[3][2] = c[5];
 	m2[3][3] = c[6];
 
+	double** m3 = new double* [4];
+	for (int i = 0; i < 4; ++i)
+	{
+		m3[i] = new double[4];
+	}
 	m3[0][0] = c[0];
 	m3[0][1] = c[1];
 	m3[0][2] = c[2];
