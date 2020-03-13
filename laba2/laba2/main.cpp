@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-void print(int** a, int n)
+void print(int** a, int n) // функция для вывода матрицы на экран
 {
 	for (int i = 1; i <= n; ++i)
 	{
@@ -13,21 +13,22 @@ void print(int** a, int n)
 	}
 }
 
-void floyd(int** a, int n)
+void floyd(int** a, int n) // алгоритм флойда
 {
-	for (int k = 1; k <= n; ++k)
+	for (int k = 1; k <= n; ++k) // перебирает промежуточную вершину
 	{
-		for (int i = 1; i <= n; ++i)
+		for (int i = 1; i <= n; ++i) // перебираем строчки
 		{
-			for (int j = 1; j <= n; ++j)
+			for (int j = 1; j <= n; ++j) // находясь в конкретной строчке перебираем столбцы
 			{
-				int prom = a[i][k] + a[k][j];
-				if (prom < a[i][j])
+				int prom = a[i][k] + a[k][j]; // считаем путь через промежуточную вершину
+				if (prom < a[i][j]) // сравниваем пути
 				{
 					a[i][j] = prom;
 				}
 			}
 		}
+		cout << "шаг = " << k << endl;
 		print(a, n);
 		cout << endl;
 	}
@@ -35,9 +36,11 @@ void floyd(int** a, int n)
 
 int main()
 {
-	int n = 8;
-	int** a = new int*[n + 1];
-	for (int i = 0; i <= n; ++i)
+	setlocale(LC_ALL, "russian");
+
+	int n = 8; // кол-во вершин
+	int** a = new int*[n + 1]; // выделение памяти под массив из строчек
+	for (int i = 0; i <= n; ++i) // выделение памяти под строчки
 	{
 		a[i] = new int[n + 1];
 	}
@@ -68,15 +71,16 @@ int main()
 	a[8][1] = 22; a[8][2] = m; a[8][3] = 14; a[8][4] = m;
 	a[8][5] = m; a[8][6] = 16; a[8][7] = m; a[8][8] = 0;
 
+	cout << "исходная матрица" << endl;
 	print(a, n);
 	cout << endl;
 	floyd(a, n);
 
-	for (int i = 0; i < n + 1; ++i)
+	for (int i = 0; i < n + 1; ++i) // очищение памяти выделенной под строчки
 	{
 		delete[] a[i];
 	}
-	delete[] a;
+	delete[] a; // очищение памяти выделенной под массив из строчек
 
 	return 0;
 }
