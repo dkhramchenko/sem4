@@ -2,7 +2,7 @@
 
 using namespace std;
 
-double det(double** a)
+double det(double** a) //функция выисляющая определитель для матрицы 4*4
 {
 	return a[0][3] * a[1][2] * a[2][1] * a[3][0] - a[0][2] * a[1][3] * a[2][1] * a[3][0] - a[0][3] * a[1][1] * a[2][2] * a[3][0] +
 		a[0][1] * a[1][3] * a[2][2] * a[3][0] + a[0][2] * a[1][1] * a[2][3] * a[3][0] - a[0][1] * a[1][2] * a[2][3] * a[3][0] -
@@ -20,7 +20,7 @@ int main()
 	double y[12] = { 1.58, 1.96, 2.44, 2.91, 3.35, 3.8, 4.31, 4.79, 5.24, 5.72, 6.18, 6.67 };
 	double c[7];
 	double b[4];
-	for (int k = 0; k < 7; k++)
+	for (int k = 0; k < 7; k++) // подсчет с
 	{
 		c[k] = 0;
 		for (int i = 0; i < 12; i++)
@@ -28,7 +28,7 @@ int main()
 			c[k] += pow(x[i], k);
 		}
 	}
-	for (int k = 0; k < 4; k++)
+	for (int k = 0; k < 4; k++) // подсчет b
 	{
 		b[k] = 0;
 		for (int i = 0; i < 12; i++)
@@ -37,10 +37,10 @@ int main()
 		}
 	}
 	
-	double** m = new double* [4];
+	double** m = new double* [4]; // выделение памяти под массив из строчек
 	for (int i = 0; i < 4; ++i)
 	{
-		m[i] = new double[4];
+		m[i] = new double[4]; // выделение памяти под строчку 
 	}
 	m[0][0] = c[0];
 	m[0][1] = c[1];
@@ -154,7 +154,7 @@ int main()
 	a[3] = det(m3) / det(m);
 
 	double delta = 0;
-	for (int i = 0; i < 12; ++i)
+	for (int i = 0; i < 12; ++i) // подсчет погрешности
 	{
 		double temp =  
 			y[i] - (a[3] * pow(x[i], 3) + a[2] * pow(x[i], 2) + a[1] * x[i] + a[0]);
@@ -166,7 +166,7 @@ int main()
 	cout << "a_2 = " << a[2] << endl << "a_3 = " << a[3] << endl;
 	cout << "delta = " << delta;
 
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 4; ++i) // очищение памяти выделенных под строчки
 	{
 		delete[] m[i];
 		delete[] m0[i];
@@ -175,7 +175,7 @@ int main()
 		delete[] m3[i];
 	}
 
-	delete[] m;
+	delete[] m; // очищение памяти выделенных под массивы из строчек
 	delete[] m0;
 	delete[] m1;
 	delete[] m2;
