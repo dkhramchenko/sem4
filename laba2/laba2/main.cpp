@@ -7,6 +7,16 @@ void print(int** a, int n) // функция для вывода матрицы 
 	{
 		for (int j = 1; j <= n; ++j)
 		{
+			if (a[i][j] == INT_MAX / 2)
+			{
+				cout << "XX ";
+				continue;
+			}
+			if (a[i][j] / 10 == 0)
+			{
+				cout << 0 << a[i][j] << " ";
+				continue;
+			}
 			cout << a[i][j] << " ";
 		}
 		cout << endl;
@@ -28,16 +38,17 @@ void floyd(int** a, int n) // алгоритм флойда
 				}
 			}
 		}
-		cout << "шаг = " << k << endl;
+		// здесь выводились шаги алгоритма Флойда
+		/*
+		cout << "shag = " << k << endl;
 		print(a, n);
 		cout << endl;
+		*/
 	}
 }
 
 int main()
 {
-	setlocale(LC_ALL, "russian");
-
 	int n = 8; // кол-во вершин
 	int** a = new int*[n + 1]; // выделение памяти под массив из строчек
 	for (int i = 0; i <= n; ++i) // выделение памяти под строчки
@@ -45,7 +56,7 @@ int main()
 		a[i] = new int[n + 1];
 	}
 
-	int m = 99;
+	int m = INT_MAX / 2;
 
 	a[1][1] = 0; a[1][2] = 5; a[1][3] = m; a[1][4] = m;
 	a[1][5] = m; a[1][6] = m; a[1][7] = m; a[1][8] = 22;
@@ -71,10 +82,17 @@ int main()
 	a[8][1] = 22; a[8][2] = m; a[8][3] = 14; a[8][4] = m;
 	a[8][5] = m; a[8][6] = 16; a[8][7] = m; a[8][8] = 0;
 
-	cout << "исходная матрица" << endl;
+	cout << "ishodnaya matrica" << endl;
 	print(a, n);
 	cout << endl;
 	floyd(a, n);
+	cout << "rezultat" << endl;
+	print(a, n);
+
+	cout << endl << "vvedite nomera vershin dlya poiska kratchaishego puti: ";
+	int x, y;
+	cin >> x >> y;
+	cout << endl << "kratchaishii put megdu " << x << " i " << y << " = " << a[x][y] << endl;
 
 	for (int i = 0; i < n + 1; ++i) // очищение памяти выделенной под строчки
 	{
