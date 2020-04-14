@@ -16,5 +16,16 @@ namespace laba3
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            BinaryTree b = new BinaryTree();
+            b.Root = new BinaryTree.Node(1);
+            b.Root.Left = new BinaryTree.Node(2);
+            b.Root.Right = new BinaryTree.Node(3);
+            b.Root.Left.Left = new BinaryTree.Node(4);
+            b.Root.Right.Right = new BinaryTree.Node(4);
+            richTextBox1.Text = String.Format("Высота = {0}   Баланс = {1} Количество {2} = {3}", b.Height(), b.Balanced(), 5, b.AmountOfValue(5));
+        }
     }
 }
