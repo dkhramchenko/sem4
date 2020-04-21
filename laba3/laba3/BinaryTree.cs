@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +19,7 @@ namespace laba3
                 Data = data;
                 Left = null;
                 Right = null;
+                Parent = null;
             }
             // свойство для чтения и записи данных узла
             public int Data { get; set; }
@@ -24,6 +27,8 @@ namespace laba3
             public Node Left { get; set; }
             // свойство для чтения и записи правого потомка
             public Node Right { get; set; }
+            // свойство для чтения и записи родителя
+            public Node Parent { get; set; }
             // рекурсивный метод вычисляет высоту поддерева
             public int Height()
             {
@@ -50,7 +55,7 @@ namespace laba3
                 // сюда программа дойти не может, поскольку разобраны всевозможные случаи
                 return -1;
             }
-            // рекурсивный метод проверяет поддерево на сбалансированность
+            // Задание 1: рекурсивный метод проверяет поддерево на сбалансированность
             public bool Balanced()
             {
                 // выход из рекурсии. Случай листа(нет потомков)
@@ -76,7 +81,7 @@ namespace laba3
                 // сюда программа дойти не может, поскольку разобраны всевозможные случаи
                 return true;
             }
-            // рекурсивный метод 
+            // Задание 2: рекурсивный метод возвращает количество элементов с заданным значением в поддереве
             public int AmountOfValue(int value)
             {
                 // если данное значение есть в рассматриваемой вершине
@@ -108,19 +113,123 @@ namespace laba3
                 // сюда программа дойти не может, поскольку разобраны всевозможные случаи
                 return -1;
             }
-            public int MinBranchLength()
+            // задание 3: рекурсивный метод выозвращает длину самой короткой ветки поддерева и
+            // записывает все элементы этой ветки через пробел в переменную s
+            public Node ShortestBranch()
             {
+                // выход из рекурсии. Случай листа(нет потомков)
                 if (Left == null && Right == null)
                 {
                     return 1;
                 }
-
+                // случай сучка(есть только правый потомок)
+                if (Left == null && Right != null)
+                {
+                    return Right.ShortestBranch(ref s) + 1;
+                }
+                // случай сучка(есть только левый потомок)
                 if (Left != null && Right == null)
                 {
-                    return 1 + Left.MinBranchLength();
+                    return Left.ShortestBranch(ref s) + 1;
                 }
-
-                return 0;
+                // случай сучка(есть оба потомка)
+                if (Left != null && Right != null)
+                {
+                    int l = Left.ShortestBranch(ref s);
+                    int r = Right.ShortestBranch(ref s);
+                    if (l < r)
+                    {
+                        // добавили в ветку текущее значение
+                        s += Left.Data.ToString() + " ";
+                        return 1 + l;
+                    }
+                    else
+                    {
+                        // добавили в ветку текущее значение
+                        s += Right.Data.ToString() + " ";
+                        return 1 + r;
+                    }
+                }
+                // сюда программа дойти не может, поскольку разобраны всевозможные случаи
+                return -1;
+            }
+            // Задание 6: рекурсивный метод возвращает количество листьев в поддереве
+            public int AmountOfLeaves()
+            {
+                // выход из рекурсии. Случай листа(нет потомков)
+                if (Left == null && Right == null)
+                {
+                    return 1;
+                }
+                // случай сучка(есть только левый потомок)
+                if (Left != null && Right == null)
+                {
+                    return Left.AmountOfLeaves();
+                }
+                // случай сучка(есть только правый потомок)
+                if (Left == null && Right != null)
+                {
+                    return Right.AmountOfLeaves();
+                }
+                // случай сучка(есть оба потомка)
+                if (Left != null && Right != null)
+                {
+                    return Left.AmountOfLeaves() + Right.AmountOfLeaves();
+                }
+                // сюда программа дойти не может, поскольку разобраны всевозможные случаи
+                return -1;
+            }
+            // Задание 7: рекурсивный метод, проверяет является ли поддерево строгим
+            public bool Strict()
+            {
+                // выход из рекурсии. Случай листа(нет потомков)
+                if (Left == null && Right == null)
+                {
+                    return true;
+                }
+                // случай сучка(есть только левый потомок)
+                if (Left != null && Right == null)
+                {
+                    return false;
+                }
+                // случай сучка(есть только правый потомок)
+                if (Left == null && Right != null)
+                {
+                    return false;
+                }
+                // случай сучка(есть оба потомка)
+                if (Left != null && Right != null)
+                {
+                    return Left.Strict() && Right.Strict();
+                }
+                // сюда программа дойти не может, поскольку разобраны всевозможные случаи
+                return true;
+            }
+            // Задание 8: рекурсивный метод, проверяет является ли поддерево полным
+            public bool Full()
+            {
+                // выход из рекурсии. Случай листа(нет потомков)
+                if (Left == null && Right == null)
+                {
+                    return true;
+                }
+                // случай сучка(есть только левый потомок)
+                if (Left != null && Right == null)
+                {
+                    return false;
+                }
+                // случай сучка(есть только правый потомок)
+                if (Left == null && Right != null)
+                {
+                    return false;
+                }
+                // случай сучка(есть оба потомка)
+                if (Left != null && Right != null)
+                {
+                    return Left.Full() && Right.Full() && Left.Height() == Right.Height();
+                }
+                // сюда программа дойти не может, поскольку разобраны всевозможные случаи
+                return true;
             }
         }
         // свойство для чтения и записи корня дерева
@@ -142,7 +251,7 @@ namespace laba3
                 return Root.Height();
             }
         }
-        // рекурсивный метод проверяет дерево на сбалансированность
+        // задание 1: рекурсивный метод проверяет дерево на сбалансированность
         public bool Balanced()
         {
             if (Root == null)
@@ -154,7 +263,7 @@ namespace laba3
                 return Root.Balanced();
             }
         }
-        // рекурсивный метод вычисляет количество элементов с заданным значением value
+        // задание 2: рекурсивный метод вычисляет количество элементов с заданным значением value
         public int AmountOfValue(int value)
         {
             if (Root == null)
@@ -164,6 +273,57 @@ namespace laba3
             else
             {
                 return Root.AmountOfValue(value);
+            }
+        }
+        // задание 3: рекурсивный метод выозвращает длину самой короткой ветки дерева и
+        // записывает все элементы этой ветки через пробел в переменную s
+        public int ShortestBranch(ref string s)
+        {
+            if (Root == null)
+            {
+                return 0;
+            }
+            else
+            {
+                // добавили в ветку текущее значение
+                s += Root.Data.ToString() + " ";
+                return Root.ShortestBranch(ref s);
+            }
+        }
+        // задание 6: рекурсивный метод вычисляет количество листьев дерева
+        public int AmountOfLeaves()
+        {
+            if (Root == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return Root.AmountOfLeaves();
+            }
+        }
+        // задание 7: рекурсивный метод проверяет является ли дерево строгим
+        public bool Strict()
+        {
+            if (Root == null)
+            {
+                return true;
+            }
+            else
+            {
+                return Root.Strict();
+            }
+        }
+        // задание 8: рекурсивный метод проверяет является ли дерево полным
+        public bool Full()
+        {
+            if (Root == null)
+            {
+                return true;
+            }
+            else
+            {
+                return Root.Full();
             }
         }
     }
