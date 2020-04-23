@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -115,7 +116,7 @@ namespace laba3
             }
             // задание 3: рекурсивный метод выозвращает длину самой короткой ветки поддерева и
             // записывает все элементы этой ветки через пробел в переменную s
-            public Node ShortestBranch()
+            public int ShortestBranchHeight()
             {
                 // выход из рекурсии. Случай листа(нет потомков)
                 if (Left == null && Right == null)
@@ -125,33 +126,52 @@ namespace laba3
                 // случай сучка(есть только правый потомок)
                 if (Left == null && Right != null)
                 {
-                    return Right.ShortestBranch(ref s) + 1;
+                    return Right.ShortestBranchHeight() + 1;
                 }
                 // случай сучка(есть только левый потомок)
                 if (Left != null && Right == null)
                 {
-                    return Left.ShortestBranch(ref s) + 1;
+                    return Left.ShortestBranchHeight() + 1;
                 }
                 // случай сучка(есть оба потомка)
                 if (Left != null && Right != null)
                 {
-                    int l = Left.ShortestBranch(ref s);
-                    int r = Right.ShortestBranch(ref s);
-                    if (l < r)
-                    {
-                        // добавили в ветку текущее значение
-                        s += Left.Data.ToString() + " ";
-                        return 1 + l;
-                    }
-                    else
-                    {
-                        // добавили в ветку текущее значение
-                        s += Right.Data.ToString() + " ";
-                        return 1 + r;
-                    }
+                    return Math.Min(Left.ShortestBranchHeight(), Right.ShortestBranchHeight()) + 1;
                 }
                 // сюда программа дойти не может, поскольку разобраны всевозможные случаи
                 return -1;
+            }
+            public Node ShortestBranchLastNode()
+            {
+                // выход из рекурсии. Случай листа(нет потомков)
+                if (Left == null && Right == null)
+                {
+                    return this;
+                }
+                // случай сучка(есть только правый потомок)
+                if (Left == null && Right != null)
+                {
+                    return Right.ShortestBranchLastNode();
+                }
+                // случай сучка(есть только левый потомок)
+                if (Left != null && Right == null)
+                {
+                    return Left.ShortestBranchLastNode();
+                }
+                // случай сучка(есть оба потомка)
+                if (Left != null && Right != null)
+                {
+                    if (Left.ShortestBranchHeight() <= Right.ShortestBranchHeight())
+                    {
+                        return Left.ShortestBranchLastNode();
+                    }
+                    else
+                    {
+                        return Right.ShortestBranchLastNode();
+                    }
+                }
+                // сюда программа дойти не может, поскольку разобраны всевозможные случаи
+                return null;
             }
             // Задание 6: рекурсивный метод возвращает количество листьев в поддереве
             public int AmountOfLeaves()
@@ -277,18 +297,32 @@ namespace laba3
         }
         // задание 3: рекурсивный метод выозвращает длину самой короткой ветки дерева и
         // записывает все элементы этой ветки через пробел в переменную s
-        public int ShortestBranch(ref string s)
+        public Node ShortestBranchLastNode()
         {
             if (Root == null)
             {
-                return 0;
+                return null;
             }
             else
             {
-                // добавили в ветку текущее значение
-                s += Root.Data.ToString() + " ";
-                return Root.ShortestBranch(ref s);
+                return Root.ShortestBranchLastNode();
             }
+        }
+        public string ShortestBranch()
+        {
+            string s = "";
+            if (Root == null)
+            {
+                return s;
+            }
+
+            Node temp = Root.ShortestBranchLastNode();
+            while (temp.Parent != null)
+            {
+                s = temp.Data.ToString() + " " + s;
+            }
+
+            return s;
         }
         // задание 6: рекурсивный метод вычисляет количество листьев дерева
         public int AmountOfLeaves()
