@@ -31,9 +31,11 @@ namespace laba3
             b.Root.Left.Right = new BinaryTree.Node(4);
             b.Root.Left.Right.Parent = b.Root.Left;
             //b.Root.Right.Left = new BinaryTree.Node(6);
-            richTextBox1.Text = String.Format("Высота = {0}; Баланс = {1}; Количество {2} = {3}; Количество листьев = {4}; " +
+            /*richTextBox1.Text = String.Format("Высота = {0}; Баланс = {1}; Количество {2} = {3}; Количество листьев = {4}; " +
                 "Строгое = {5}; Полное = {6}; Самая короткая ветка = {7}",
-                b.Height(), b.Balanced(), 4, b.AmountOfValue(4), b.AmountOfLeaves(), b.Strict(), b.Full(), b.ShortestBranch());
+                b.Height(), b.Balanced(), 4, b.AmountOfValue(4), b.AmountOfLeaves(), b.Strict(), b.Full(), b.ShortestBranch());*/
+            richTextBox1.Text = b.ShortestBranch();
+            b.Full();
         }
     }
 }

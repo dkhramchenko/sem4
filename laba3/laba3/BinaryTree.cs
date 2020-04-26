@@ -320,10 +320,13 @@ namespace laba3
             while (temp.Parent != null)
             {
                 s = temp.Data.ToString() + " " + s;
+                temp = temp.Parent;
             }
+            s = temp.Data.ToString() + " " + s;
 
             return s;
         }
+        
         // задание 6: рекурсивный метод вычисляет количество листьев дерева
         public int AmountOfLeaves()
         {
@@ -336,6 +339,7 @@ namespace laba3
                 return Root.AmountOfLeaves();
             }
         }
+        
         // задание 7: рекурсивный метод проверяет является ли дерево строгим
         public bool Strict()
         {
@@ -348,6 +352,7 @@ namespace laba3
                 return Root.Strict();
             }
         }
+
         // задание 8: рекурсивный метод проверяет является ли дерево полным
         public bool Full()
         {
