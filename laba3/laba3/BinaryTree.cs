@@ -370,6 +370,103 @@ namespace laba3
                 // сюда программа дойти не может, поскольку разобраны всевозможные случаи
                 return;
             }
+
+            // Задание 11:
+            public Node FindValue(int value)
+            {
+                if (this.Data == value)
+                {
+                    return this;
+                }
+                // выход из рекурсии. Случай листа(нет потомков)
+                if (Left == null && Right == null)
+                {
+                    return null;
+                }
+                // случай сучка(есть только левый потомок)
+                if (Left != null && Right == null)
+                {
+                    return Left.FindValue(value);
+                }
+                // случай сучка(есть только правый потомок)
+                if (Left == null && Right != null)
+                {
+                    return Right.FindValue(value);
+                }
+                // случай сучка(есть оба потомка)
+                if (Left != null && Right != null)
+                {
+                    Node l = Left.FindValue(value);
+                    Node r = Right.FindValue(value);
+                    if (l == null)
+                    {
+                        return r;
+                    }
+                    else
+                    {
+                        return l;
+                    }
+                }
+                // сюда программа дойти не может, поскольку разобраны всевозможные случаи
+                return null;
+            }
+
+            // Задание 12:
+            public void Add(int value)
+            {
+                // выход из рекурсии. Случай листа(нет потомков)
+                if (Left == null && Right == null)
+                {
+                    if (value <= Data)
+                    {
+                        Left = new Node(value);
+                    }
+                    else
+                    {
+                        Right = new Node(value);
+                    }
+                    return;
+                }
+                // случай сучка(есть только левый потомок)
+                if (Left != null && Right == null)
+                {
+                    if (value <= Data)
+                    {
+                        Left.Add(value);
+                    }
+                    else
+                    {
+                        Right = new Node(value);
+                    }
+                    return;
+                }
+                // случай сучка(есть только правый потомок)
+                if (Left == null && Right != null)
+                {
+                    if (value <= Data)
+                    {
+                        Right.Add(value);
+                    }
+                    else
+                    {
+                        Left = new Node(value);
+                    }
+                    return;
+                }
+                // случай сучка(есть оба потомка)
+                if (Left != null && Right != null)
+                {
+                    if (value <= Data)
+                    {
+                        Left.Add(value);
+                    }
+                    else
+                    {
+                        Right.Add(value);
+                    }
+                    return;
+                }
+            }
         }
 
         // свойство для чтения и записи корня дерева
@@ -637,6 +734,54 @@ namespace laba3
                 s += LengthOfBranch(x);
             }
             return s / AmountOfLeaves();
+        }
+
+        // Задание 11:
+        public void DeleteValue(int value)
+        {
+            Node toDelete = Root.FindValue(value);
+            if (toDelete == null)
+            {
+                return;
+            }
+
+            // Случай листа(нет потомков)
+            if (toDelete.Left == null && toDelete.Right == null)
+            {
+                if (toDelete.Parent.Left == toDelete)
+                {
+                    toDelete.Parent.Left = null;
+                }
+                else
+                {
+                    toDelete.Parent.Right = null;
+                }
+            }
+            // случай сучка(есть только левый потомок)
+            if (toDelete.Left != null && toDelete.Right == null)
+            {
+                toDelete.Data = 0;
+            }
+            // случай сучка(есть только правый потомок)
+            if (toDelete.Left == null && toDelete.Right != null)
+            {
+                toDelete.Data = 0;
+            }
+            // случай сучка(есть оба потомка)
+            if (toDelete.Left != null && toDelete.Right != null)
+            {
+                toDelete.Data = 0;
+            }
+        }
+
+        // Задание 12:
+        public void GenerateFromList(List<int> l)
+        {
+            Root = new Node(l[0]);
+            for (int i = 1; i < l.Count(); ++i)
+            {
+                Root.Add(l[i]);
+            }
         }
     }
 }
