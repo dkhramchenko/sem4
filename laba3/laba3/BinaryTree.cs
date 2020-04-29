@@ -338,6 +338,38 @@ namespace laba3
                 // сюда программа дойти не может, поскольку разобраны всевозможные случаи
                 return;
             }
+
+            // Задание 10:
+            public void ListOfLeavesNodes(ref List<Node> l)
+            {
+                // выход из рекурсии. Случай листа(нет потомков)
+                if (Left == null && Right == null)
+                {
+                    l.Add(this);
+                    return;
+                }
+                // случай сучка(есть только левый потомок)
+                if (Left != null && Right == null)
+                {
+                    Left.ListOfLeavesNodes(ref l);
+                    return;
+                }
+                // случай сучка(есть только правый потомок)
+                if (Left == null && Right != null)
+                {
+                    Right.ListOfLeavesNodes(ref l);
+                    return;
+                }
+                // случай сучка(есть оба потомка)
+                if (Left != null && Right != null)
+                {
+                    Left.ListOfLeavesNodes(ref l);
+                    Right.ListOfLeavesNodes(ref l);
+                    return;
+                }
+                // сюда программа дойти не может, поскольку разобраны всевозможные случаи
+                return;
+            }
         }
 
         // свойство для чтения и записи корня дерева
@@ -470,6 +502,10 @@ namespace laba3
 
             int h = this.Height();
             List<Node>[] x = new List<Node>[h];
+            for (int i = 0; i < h; ++i)
+            {
+                x[i] = new List<Node>();
+            }
             x[0].Add(Root);
             for (int i = 1; i < h; ++i)
             {
@@ -539,7 +575,7 @@ namespace laba3
             }
         }
 
-        // Задание 9: рекурсивный метод добавляет в переданный ему список листы поддерева
+        // Задание 9: возвращает строку из упорядоченных листьев дерева
         public string Leaves()
         {
             string s = "";
@@ -563,6 +599,44 @@ namespace laba3
             }
 
             return s;
+        }
+
+        // Задание 10: 
+        public int LengthOfBranch(Node lastNode)
+        {
+            int l = 0;
+            while (lastNode.Parent != null)
+            {
+                ++l;
+                lastNode = lastNode.Parent;
+            }
+            ++l;
+            return l;
+        }
+        public void ListOfLeavesNodes(ref List<Node> l)
+        {
+            if (Root == null)
+            {
+                l = null;
+            }
+
+            this.Root.ListOfLeavesNodes(ref l);
+        }
+        public double MeanBranchLength()
+        {
+            if (Root == null)
+            {
+                return 0;
+            }
+
+            double s = 0;
+            List<Node> l = new List<Node>();
+            this.ListOfLeavesNodes(ref l);
+            foreach (var x in l)
+            {
+                s += LengthOfBranch(x);
+            }
+            return s / AmountOfLeaves();
         }
     }
 }
