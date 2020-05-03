@@ -427,7 +427,7 @@ namespace laba3
                     }
                     return;
                 }
-                // случай сучка(есть только левый потомок)
+                // случай сучка (есть только левый потомок)
                 if (Left != null && Right == null)
                 {
                     if (value <= Data)
@@ -445,11 +445,11 @@ namespace laba3
                 {
                     if (value <= Data)
                     {
-                        Right.Add(value);
+                        Left = new Node(value);
                     }
                     else
                     {
-                        Left = new Node(value);
+                        Right.Add(value);
                     }
                     return;
                 }
