@@ -20,13 +20,10 @@ namespace laba3
         private void Form1_Load(object sender, EventArgs e)
         {
             BinaryTree b = new BinaryTree();
-            b.Root = new BinaryTree.Node(1);
-            b.Root.Left = new BinaryTree.Node(2);
-            b.Root.Right = new BinaryTree.Node(3);
-            b.Root.Left.Left = new BinaryTree.Node(4);
-            b.Root.Right.Right = new BinaryTree.Node(4);
-            b.Root.Left.Right = new BinaryTree.Node(4);
-            richTextBox1.Text = String.Format("Высота = {0}   Баланс = {1} Количество {2} = {3}", b.Height(), b.Balanced(), 4, b.AmountOfValue(4));
+            List<int> l = new List<int> { 2, 1, 3};
+            b.GenerateFromList(l);
+            richTextBox1.Text = b.Root.Data.ToString() + b.Root.Left.Data.ToString() +
+                b.Root.Right.Data.ToString();
         }
 
         private void RichTextBox1_TextChanged(object sender, EventArgs e)
