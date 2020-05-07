@@ -28,5 +28,10 @@ namespace laba3
             b.Root.Left.Right = new BinaryTree.Node(4);
             richTextBox1.Text = String.Format("Высота = {0}   Баланс = {1} Количество {2} = {3}", b.Height(), b.Balanced(), 4, b.AmountOfValue(4));
         }
+
+        private void RichTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
