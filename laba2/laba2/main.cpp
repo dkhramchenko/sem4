@@ -1,4 +1,8 @@
 #include <iostream>
+#include <list>
+#include <vector>
+#include <set>
+
 using namespace std;
 
 void print(int** a, int n) // функция для вывода матрицы на экран
@@ -82,23 +86,65 @@ int main()
 	a[8][1] = 22; a[8][2] = m; a[8][3] = 14; a[8][4] = m;
 	a[8][5] = m; a[8][6] = 16; a[8][7] = m; a[8][8] = 0;
 
+	int** b = new int* [n + 1]; // выделение памяти под массив из строчек
+	for (int i = 0; i <= n; ++i) // выделение памяти под строчки
+	{
+		b[i] = new int[n + 1];
+	}
+	for (int i = 1; i <= n; ++i)
+	{
+		for (int j = 1; j <= n; ++j)
+		{
+			b[i][j] = a[i][j];
+		}
+	}
+
 	cout << "ishodnaya matrica" << endl;
 	print(a, n);
 	cout << endl;
 	floyd(a, n);
-	cout << "rezultat" << endl;
-	print(a, n);
-
-	cout << endl << "vvedite nomera vershin dlya poiska kratchaishego puti: ";
-	int x, y;
-	cin >> x >> y;
-	cout << endl << "kratchaishii put megdu " << x << " i " << y << " = " << a[x][y] << endl;
 
 	for (int i = 0; i < n + 1; ++i) // очищение памяти выделенной под строчки
 	{
 		delete[] a[i];
 	}
 	delete[] a; // очищение памяти выделенной под массив из строчек
+
+	vector<int> marked;
+	set<int> unmarked;
+	for (int i = 2; i <= n; ++i)
+	{
+		unmarked.insert(i);
+	}
+	marked.push_back(1);
+	int sum = 0;
+	for (int i = 1; i <= n - 1; ++i)
+	{
+		int min = INT_MAX;
+		int minNumber = 0;
+		for (int j = 1; j <= n; j++)
+		{
+			if (b[marked[i]][j] < min && b[marked[i]][j] > 0 && unmarked.find(j) != unmarked.end())
+			{
+				min = b[marked[i]][j];
+				minNumber = j;
+			}
+		}
+		marked.push_back(minNumber);
+		sum += b[marked[i]][marked[i + 1]];
+	}
+	cout << endl << "Put komivoygera: ";
+	for (int i = 0; i < n; ++i)
+	{
+		cout << marked[i] << " ";
+	}
+	cout << "; dlina = " << sum;
+
+	for (int i = 0; i < n + 1; ++i) // очищение памяти выделенной под строчки
+	{
+		delete[] b[i];
+	}
+	delete[] b; // очищение памяти выделенной под массив из строчек
 
 	return 0;
 }
