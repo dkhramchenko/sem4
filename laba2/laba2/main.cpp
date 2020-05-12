@@ -124,14 +124,15 @@ int main()
 		int minNumber = 0;
 		for (int j = 1; j <= n; j++)
 		{
-			if (b[marked[i]][j] < min && b[marked[i]][j] > 0 && unmarked.find(j) != unmarked.end())
+			if (b[marked[i - 1]][j] < min && b[marked[i - 1]][j] > 0 && unmarked.find(j) != unmarked.end())
 			{
-				min = b[marked[i]][j];
+				min = b[marked[i - 1]][j];
 				minNumber = j;
 			}
 		}
 		marked.push_back(minNumber);
-		sum += b[marked[i]][marked[i + 1]];
+		unmarked.erase(minNumber);
+		sum += b[marked[i - 1]][marked[i]];
 	}
 	cout << endl << "Put komivoygera: ";
 	for (int i = 0; i < n; ++i)
