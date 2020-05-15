@@ -50,5 +50,10 @@ namespace laba31
                 "Первое дерево: {0}; Второе дерево: {1};" +
                 " Третье дерево: {2};", t1.Strict(), t2.Strict(), t3.Strict());
         }
+
+        private void RichTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
