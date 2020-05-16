@@ -46,14 +46,26 @@ namespace laba31
             t3.Root.Right.Left = new BinaryTree.Node(5);
 
             // проверяем все три дерева на строгость
-            richTextBox1.Text = String.Format("Задание №7: проверка деревьев на строгость:\n" +
-                "Первое дерево: {0}; Второе дерево: {1};" +
-                " Третье дерево: {2};", t1.Strict(), t2.Strict(), t3.Strict());
-        }
+            // первое дерево
+            string l11 = String.Format("    1    \n");
+            string l12 = String.Format("  2   3  \n");
+            string l13 = String.Format("4       5\n");
+            richTextBox1.Text =  l11 + l12 + l13;
+            richTextBox1.Text += String.Format("Строгое = {0}", t1.Strict());
 
-        private void RichTextBox1_TextChanged(object sender, EventArgs e)
-        {
+            // второе дерево
+            string l21 = String.Format("      1      \n");
+            string l22 = String.Format("  2       3  \n");
+            string l23 = String.Format("4   5   6   7\n");
+            richTextBox2.Text = l21 + l22 + l23;
+            richTextBox2.Text += String.Format("Строгое = {0}", t2.Strict());
 
+            // третье дерево
+            string l31 = String.Format("     1      \n");
+            string l32 = String.Format("  2      3  \n");
+            string l33 = String.Format("       4   5\n");
+            richTextBox3.Text = l31 + l32 + l33;
+            richTextBox3.Text += String.Format("Строгое = {0}", t3.Strict());
         }
     }
 }
