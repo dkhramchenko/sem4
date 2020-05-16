@@ -3,29 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "laba4", "laba4\laba4.vcxproj", "{0D418731-0DB3-4561-81AB-D8CAF4879D60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "laba4", "laba4\laba4.csproj", "{DC200AFA-E8ED-4877-BB85-062FCD3881DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0D418731-0DB3-4561-81AB-D8CAF4879D60}.Debug|x64.ActiveCfg = Debug|x64
-		{0D418731-0DB3-4561-81AB-D8CAF4879D60}.Debug|x64.Build.0 = Debug|x64
-		{0D418731-0DB3-4561-81AB-D8CAF4879D60}.Debug|x86.ActiveCfg = Debug|Win32
-		{0D418731-0DB3-4561-81AB-D8CAF4879D60}.Debug|x86.Build.0 = Debug|Win32
-		{0D418731-0DB3-4561-81AB-D8CAF4879D60}.Release|x64.ActiveCfg = Release|x64
-		{0D418731-0DB3-4561-81AB-D8CAF4879D60}.Release|x64.Build.0 = Release|x64
-		{0D418731-0DB3-4561-81AB-D8CAF4879D60}.Release|x86.ActiveCfg = Release|Win32
-		{0D418731-0DB3-4561-81AB-D8CAF4879D60}.Release|x86.Build.0 = Release|Win32
+		{DC200AFA-E8ED-4877-BB85-062FCD3881DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC200AFA-E8ED-4877-BB85-062FCD3881DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC200AFA-E8ED-4877-BB85-062FCD3881DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC200AFA-E8ED-4877-BB85-062FCD3881DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {CDA69636-5D3A-4620-9768-B7B759B52949}
+		SolutionGuid = {706118ED-C868-4BDC-865D-137F2C325B95}
 	EndGlobalSection
 EndGlobal
