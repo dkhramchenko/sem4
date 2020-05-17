@@ -81,6 +81,15 @@ namespace Laba4
             }
         }
 
+        // метод возвращает высоту дерева
+        public int Height()
+        {
+            if (left == null && right == null)
+            {
+                return 1;
+            }
+        }
+
         // поля
         public char letter;
         public int frequency;
@@ -106,9 +115,21 @@ namespace Laba4
 
         public void setLevels()
         {
-            root.level = 0;
-            root.left.setLevels();
-            root.right.setLevels();
+            if (root != null)
+            {
+                root.level = 1;
+                root.left.setLevels();
+                root.right.setLevels();
+            }
+        }
+
+        public int Height()
+        {
+            if (root == null)
+            {
+                return 0;
+            }
+            return root.Height();
         }
 
         public void decreaseCodes()
