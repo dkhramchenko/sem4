@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Laba4
 {
-    // Класс дерева
+    // класс узла
     public class Node
     {
         // конструктор
@@ -68,7 +68,17 @@ namespace Laba4
         // метод расставляет уровни
         public void setLevels()
         {
+            this.level = this.parent.level + 1;
 
+            if (left != null)
+            {
+                left.setLevels();
+            }
+
+            if (right != null)
+            {
+                right.setLevels();
+            }
         }
 
         // поля
@@ -80,6 +90,35 @@ namespace Laba4
         public Node right;
         public Node parent;
     }
+    // класс узла
+    public class Tree
+    {
+        // конструктор
+        public Tree(Node root = null)
+        {
+            this.root = root;
+        }
+
+        public void CodingTable(ref Dictionary<char, string> codingTable)
+        {
+            root.CodingTable(ref codingTable);
+        }
+
+        public void setLevels()
+        {
+            root.level = 0;
+            root.left.setLevels();
+            root.right.setLevels();
+        }
+
+        public void decreaseCodes()
+        {
+
+        }
+
+        public Node root;
+    }
+
     class Program
     {
         // метод для сравнения листов дерева
@@ -163,11 +202,11 @@ namespace Laba4
                 queue.Add(node);
                 queue.Sort((n1, n2) => Comp(n1, n2));
             }
-            Node root = queue[0];
+            Tree HaffMannTree = new Tree(queue[0]);
 
             // создаём словарь кодов символов
             Dictionary<char, string> codingTable = new Dictionary<char, string>();
-            root.CodingTable(ref codingTable);
+            HaffMannTree.CodingTable(ref codingTable);
 
             // выводим таблицу частот и вероятности
             using (StreamWriter table1 = new StreamWriter(File.Open("table1.txt", FileMode.Create)))
@@ -212,7 +251,7 @@ namespace Laba4
             {
                 for (int i = 0; i < bookToDecode.Length; ++i)
                 {
-                    Node temp = root;
+                    Node temp = HaffMannTree.root;
                     while (temp.left != null || temp.right != null)
                     {
                         if (bookToDecode[i] == '0')
@@ -229,6 +268,8 @@ namespace Laba4
                     --i;
                 }
             }
+
+            // 
 
             Console.ReadKey();
         }
