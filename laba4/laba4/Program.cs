@@ -244,7 +244,11 @@ namespace Laba4
 
         public void decreaseCodes()
         {
-            
+            int h = Height();
+            while (this.Height() == h)
+            {
+                this.replaceLastNode();
+            }
         }
 
         public Node root;
@@ -401,7 +405,7 @@ namespace Laba4
             }
 
             // 
-
+            HaffMannTree.decreaseCodes();
             Console.ReadKey();
         }
     }
