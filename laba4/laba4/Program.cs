@@ -97,8 +97,8 @@ namespace laba4
             Dictionary<char, string> codingTable0 = new Dictionary<char, string>();
             HaffMannTree.CodingTable(ref codingTable0);
 
-            // выводим таблицу частот и вероятности
-            using (StreamWriter table1 = new StreamWriter(File.Open("table1.txt", FileMode.Create)))
+            // выводим таблицу частот и вероятности для кода без ограничения на длину
+            using (StreamWriter table0 = new StreamWriter(File.Open("table0.txt", FileMode.Create)))
             {
                 var sortedDictionary = new SortedDictionary<char, int>(dictionary);
                 foreach (var el in sortedDictionary)
@@ -110,7 +110,7 @@ namespace laba4
                     string probability = p.ToString();
                     string code = codingTable0[el.Key];
 
-                    table1.WriteLine(String.Format("symbol = {0}; frequency = {1};" +
+                    table0.WriteLine(String.Format("symbol = {0}; frequency = {1};" +
                         " probability = {2}; code = {3}; codeLength = {4}",
                         symbol, frequency, probability, code, code.Length));
                 }
@@ -170,8 +170,26 @@ namespace laba4
                 }
             }
 
+            // выводим таблицу частот и вероятности, уменьшив максимальную длину кода на 1
+            using (StreamWriter table1 = new StreamWriter(File.Open("table1.txt", FileMode.Create)))
+            {
+                var sortedDictionary = new SortedDictionary<char, int>(dictionary);
+                foreach (var el in sortedDictionary)
+                {
+                    string symbol = el.Key.ToString();
+                    string frequency = el.Value.ToString();
+                    double f = Convert.ToDouble(el.Value);
+                    double p = f / originalBook.Length;
+                    string probability = p.ToString();
+                    string code = codingTable1[el.Key];
+
+                    table1.WriteLine(String.Format("symbol = {0}; frequency = {1};" +
+                        " probability = {2}; code = {3}; codeLength = {4}",
+                        symbol, frequency, probability, code, code.Length));
+                }
+            }
+
             // кодируем книгу, уменьшив длину кода на 2
-            HaffMannTree.setLevels();
             HaffMannTree.ReduceLevel();
             Dictionary<char, string> codingTable2 = new Dictionary<char, string>();
             HaffMannTree.CodingTable(ref codingTable2);
@@ -180,6 +198,25 @@ namespace laba4
                 foreach (var symbol in originalBook)
                 {
                     encodedbook.Write(codingTable2[symbol]);
+                }
+            }
+
+            // выводим таблицу частот и вероятности, уменьшив максимальную длину кода на 2
+            using (StreamWriter table2 = new StreamWriter(File.Open("table2.txt", FileMode.Create)))
+            {
+                var sortedDictionary = new SortedDictionary<char, int>(dictionary);
+                foreach (var el in sortedDictionary)
+                {
+                    string symbol = el.Key.ToString();
+                    string frequency = el.Value.ToString();
+                    double f = Convert.ToDouble(el.Value);
+                    double p = f / originalBook.Length;
+                    string probability = p.ToString();
+                    string code = codingTable2[el.Key];
+
+                    table2.WriteLine(String.Format("symbol = {0}; frequency = {1};" +
+                        " probability = {2}; code = {3}; codeLength = {4}",
+                        symbol, frequency, probability, code, code.Length));
                 }
             }
 
@@ -192,6 +229,25 @@ namespace laba4
                 foreach (var symbol in originalBook)
                 {
                     encodedbook.Write(codingTable3[symbol]);
+                }
+            }
+
+            // выводим таблицу частот и вероятности, уменьшив максимальную длину кода на 3
+            using (StreamWriter table3 = new StreamWriter(File.Open("table3.txt", FileMode.Create)))
+            {
+                var sortedDictionary = new SortedDictionary<char, int>(dictionary);
+                foreach (var el in sortedDictionary)
+                {
+                    string symbol = el.Key.ToString();
+                    string frequency = el.Value.ToString();
+                    double f = Convert.ToDouble(el.Value);
+                    double p = f / originalBook.Length;
+                    string probability = p.ToString();
+                    string code = codingTable3[el.Key];
+
+                    table3.WriteLine(String.Format("symbol = {0}; frequency = {1};" +
+                        " probability = {2}; code = {3}; codeLength = {4}",
+                        symbol, frequency, probability, code, code.Length));
                 }
             }
 

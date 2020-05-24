@@ -20,7 +20,7 @@ namespace laba4
             this.position = position;
             this.left = left;
             this.right = right;
-            this.parent = right;
+            this.parent = parent;
         }
 
         // метод возвращает высоту дерева
