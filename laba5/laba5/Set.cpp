@@ -2,11 +2,13 @@
 #include "Node.h"
 #include <algorithm>
 
+// конструктор
 Set::Set()
 {
 	head = nullptr;
 }
 
+// деструктор
 Set::~Set()
 {
 	if (head != nullptr)
@@ -15,6 +17,7 @@ Set::~Set()
 	}
 }
 
+// удаление элемента по ключу
 void Set::deleteRecursion(Node* current)
 {
 	if (current->leftChild != nullptr)
@@ -28,6 +31,7 @@ void Set::deleteRecursion(Node* current)
 	delete current;
 }
 
+// добавление значения по ключу
 void Set::addValueByKey(std::string const& key, std::string const& value)
 {
 	if (isEmpty())
@@ -45,6 +49,7 @@ void Set::addValueByKey(std::string const& key, std::string const& value)
 	balance(added);
 }
 
+// добавление, если такой ключ есть
 void Set::addIfKeyExists(std::string const& key, std::string const& value, Node* current)
 {
 	if (key == current->key)
@@ -61,6 +66,7 @@ void Set::addIfKeyExists(std::string const& key, std::string const& value, Node*
 	}
 }
 
+// вспомогательная рекурсия для добавления
 Node* Set::addRecurson(std::string const& key, std::string const& value, Node* current)
 {
 	if (key < current->key)
@@ -91,6 +97,7 @@ Node* Set::addRecurson(std::string const& key, std::string const& value, Node* c
 	}
 }
 
+// балансировка
 void Set::balance(Node* added)
 {
 	if (added->parent == nullptr || added->parent->parent == nullptr)
@@ -124,6 +131,7 @@ void Set::balance(Node* added)
 	}
 }
 
+// возвращает длину поддерева
 int Set::lengthOfSubtree(Node* current) const
 {
 	if (current == nullptr)
@@ -133,6 +141,7 @@ int Set::lengthOfSubtree(Node* current) const
 	return 1 + std::max(lengthOfSubtree(current->leftChild), lengthOfSubtree(current->rightChild));
 }
 
+// установка баланса
 void Set::setBalance(Node* a, Node* b, Node* c)
 {
 	if (a->leftChild == b && b->leftChild == c)
@@ -163,6 +172,7 @@ void Set::setBalance(Node* a, Node* b, Node* c)
 	}
 }
 
+// малый левый поворот
 void Set::rotateSmallLeft(Node* a, Node* b, Node* c)
 {
 	b->parent = a->parent;
@@ -190,6 +200,7 @@ void Set::rotateSmallLeft(Node* a, Node* b, Node* c)
 	}
 }
 
+// малый правый поворот
 void Set::rotateSmallRight(Node* a, Node* b, Node* c)
 {
 	b->parent = a->parent;
@@ -217,6 +228,7 @@ void Set::rotateSmallRight(Node* a, Node* b, Node* c)
 	}
 }
 
+// левый поворот
 void Set::rotateLeft(Node* a, Node* b, Node* c)
 {
 	c->parent = a->parent;
@@ -251,6 +263,7 @@ void Set::rotateLeft(Node* a, Node* b, Node* c)
 	}
 }
 
+// правый поворот
 void Set::rotateRight(Node* a, Node* b, Node* c)
 {
 	c->parent = a->parent;
@@ -285,6 +298,7 @@ void Set::rotateRight(Node* a, Node* b, Node* c)
 	}
 }
 
+// получение значения по ключу
 std::string Set::getValueByKey(std::string const& key)
 {
 	if (isEmpty())
@@ -294,6 +308,7 @@ std::string Set::getValueByKey(std::string const& key)
 	return getValueByKeyRecursion(key, head);
 }
 
+// вспомогательная рекурсия для получения значения по ключу
 std::string Set::getValueByKeyRecursion(std::string const& key, Node const* const current)
 {
 	if (current->key == key)
@@ -317,6 +332,7 @@ std::string Set::getValueByKeyRecursion(std::string const& key, Node const* cons
 	return "";
 }
 
+// проверка существует ли такой ключ в дереве
 bool Set::keyExists(std::string const& key) const
 {
 	if (isEmpty())
@@ -328,6 +344,7 @@ bool Set::keyExists(std::string const& key) const
 	return keyWasFound;
 }
 
+// вспомогательная рекурсия для проверки на наличие ключа
 void Set::keyExistsRecursion(bool& keyWasFound, std::string const& key, Node const* const current) const
 {
 	if (current->key == key)
@@ -345,11 +362,13 @@ void Set::keyExistsRecursion(bool& keyWasFound, std::string const& key, Node con
 	}
 }
 
+// проверка на пустоту
 bool Set::isEmpty() const
 {
 	return head == nullptr;
 }
 
+// замена местами элементов
 void Set::swap(Node* const a, Node* const b)
 {
 	Node  const temp = *b;
@@ -359,6 +378,7 @@ void Set::swap(Node* const a, Node* const b)
 	a->key = temp.key;
 }
 
+// удаление элемента по ключу
 void Set::deleteNodeByKey(std::string const& key)
 {
 	if (keyExists(key))
@@ -385,6 +405,7 @@ void Set::deleteNodeByKey(std::string const& key)
 	}
 }
 
+// удаление элемента без детей
 Node* Set::deleteElementThatDoesNotHaveChildren(Node* elementToDelete)
 {
 	auto* parent = elementToDelete->parent;
@@ -403,6 +424,7 @@ Node* Set::deleteElementThatDoesNotHaveChildren(Node* elementToDelete)
 	return parent;
 }
 
+// удаление элемента с ребёнком
 Node* Set::deleteElementThatHasAChild(Node* elementToDelete)
 {
 	Node* parent = nullptr;
@@ -432,6 +454,7 @@ Node* Set::deleteElementThatHasAChild(Node* elementToDelete)
 	return parent;
 }
 
+// возвращает элемент по ключу
 Node* Set::getNodeByKey(std::string const& key) const
 {
 	Node* result = nullptr;
@@ -439,6 +462,7 @@ Node* Set::getNodeByKey(std::string const& key) const
 	return result;
 }
 
+// вспомагательная рекурсия для возвращаения элемента по ключу
 void Set::getNodeByKeyRecursion(std::string const& key, Node* const current, Node*& result) const
 {
 	if (current->key == key)
@@ -461,6 +485,7 @@ void Set::getNodeByKeyRecursion(std::string const& key, Node* const current, Nod
 	}
 }
 
+// вовращает минимальный элемент поддерева
 Node* Set::getMinInSubtree(Node* const current)
 {
 	if (current->leftChild != nullptr)
@@ -473,6 +498,7 @@ Node* Set::getMinInSubtree(Node* const current)
 	}
 }
 
+// печать
 void Set::print() const
 {
 	if (!isEmpty())
@@ -481,6 +507,7 @@ void Set::print() const
 	}
 }
 
+// вспомогательная рекурсия для печати
 void Set::printRecursion(Node const* const current) const
 {
 	if (current->leftChild != nullptr)

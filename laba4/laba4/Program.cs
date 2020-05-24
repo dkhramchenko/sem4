@@ -251,6 +251,7 @@ namespace laba4
                 }
             }
 
+            Console.WriteLine("Работа завершена!");
             Console.ReadKey();
         }
     }
