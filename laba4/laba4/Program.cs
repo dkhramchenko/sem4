@@ -5,255 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Laba4
+namespace laba4
 {
-    // класс узла
-    public class Node
-    {
-        // конструктор
-        public Node(char letter = 'x', int frequency = 0)
-        {
-            this.letter = letter;
-            this.frequency = frequency;
-            this.code = "";
-            this.level = 0;
-            this.left = null;
-            this.right = null;
-            this.parent = null;
-        }
-
-        // метод заполняет таблицу кодов по дереву
-        public void CodingTable(ref Dictionary<char, string> codingTable)
-        {
-            if (this.parent == null)
-            {
-                this.code = "";
-            }
-            else
-            {
-                if (this.parent.left == this)
-                {
-                    this.code = this.parent.code + "0";
-                }
-
-                if (this.parent.right == this)
-                {
-                    this.code = this.parent.code + "1";
-                }
-            }
-
-            if (this.left == null & this.right == null)
-            {
-                codingTable.Add(this.letter, this.code);
-                return;
-            }
-
-            if (this.left != null && this.right == null)
-            {
-                left.CodingTable(ref codingTable);
-                return;
-            }
-
-            if (this.left == null && this.right != null)
-            {
-                right.CodingTable(ref codingTable);
-                return;
-            }
-
-            left.CodingTable(ref codingTable);
-
-            right.CodingTable(ref codingTable);
-        }
-
-        // метод расставляет уровни
-        public void setLevels()
-        {
-            this.level = this.parent.level + 1;
-
-            if (left != null)
-            {
-                left.setLevels();
-            }
-
-            if (right != null)
-            {
-                right.setLevels();
-            }
-        }
-
-        // метод возвращает высоту дерева
-        public int Height()
-        {
-            if (left == null && right == null)
-            {
-                return 1;
-            }
-
-            if (left != null && right == null)
-            {
-                return 1 + left.Height();
-            }
-
-            if (left == null && right != null)
-            {
-                return 1 + right.Height();
-            }
-
-            return Math.Max(left.Height(), right.Height()) + 1;
-        }
-
-        // метод возвращает список вершин уровня
-        public void Level(int i, ref List<Node> level)
-        {
-            if (this.level == i)
-            {
-                level.Add(this);
-                return;
-            }
-
-            if (left != null && right == null)
-            {
-                left.Level(i, ref level);
-                return;
-            }
-
-            if (left == null && right != null)
-            {
-                right.Level(i, ref level);
-                return;
-            }
-
-            if (left != null && right != null)
-            {
-                left.Level(i, ref level);
-                right.Level(i, ref level);
-                return;
-            }
-
-            return;
-        }
-
-        // поля
-        public char letter;
-        public int frequency;
-        public string code;
-        public int level;
-        public Node left;
-        public Node right;
-        public Node parent;
-    }
-    // класс узла
-    public class Tree
-    {
-        // конструктор
-        public Tree(Node root = null)
-        {
-            this.root = root;
-        }
-
-        public void CodingTable(ref Dictionary<char, string> codingTable)
-        {
-            root.CodingTable(ref codingTable);
-        }
-
-        public void setLevels()
-        {
-            if (root != null)
-            {
-                root.level = 1;
-                root.left.setLevels();
-                root.right.setLevels();
-            }
-        }
-
-        public int Height()
-        {
-            if (root == null)
-            {
-                return 0;
-            }
-            return root.Height();
-        }
-
-        public List<Node> Level(int i)
-        {
-            if (root == null)
-            {
-                return null;
-            }
-
-            List<Node> level = new List<Node>();
-            root.Level(i, ref level);
-            return level;
-        }
-
-
-        public void replaceLastNode()
-        {
-            int destinationLevel = 0;
-            for (int i = Height() - 1; i > 0; --i)
-            {
-                if (Level(i).Count < Convert.ToInt32(Math.Pow(2, i - 1)))
-                {
-                    destinationLevel = i;
-                }
-            }
-
-            List<Node> l = new List<Node>();
-            int k = 0;
-            l = Level(destinationLevel - 1);
-            for (int i = 0; i < l.Count; ++i)
-            {
-                if (l[i].left == null && l[i].right == null)
-                {
-                    k = i;
-                    break;
-                }
-            }
-
-            Node ln = l[k];
-            Node rn = ln.parent.right;
-
-            ln.left = new Node(ln.letter, ln.frequency);
-            ln.left.level = ln.level + 1;
-            ln.left.code = ln.code + "0";
-            ln.left.parent = ln;
-
-            Node R = Level(Height()).Last();
-            ln.right = new Node(R.parent.letter, R.parent.frequency);
-            ln.right.level = ln.level + 1;
-            ln.right.code = ln.code + "1";
-            ln.right.parent = ln;
-
-            rn.left = new Node(rn.letter, rn.frequency);
-            rn.left.code = rn.code + "0";
-            rn.left.parent = rn;
-            rn.left.level = rn.level + 1;
-
-            rn.right = new Node(R.parent.left.letter, R.parent.left.frequency);
-            rn.right.code = rn.code + "1";
-            rn.right.level = rn.level + 1;
-            rn.right.parent = rn;
-
-            R.parent.letter = R.letter;
-            R.parent.frequency = R.frequency;
-            Node temp = R.parent;
-            temp.left = null;
-            temp.right = null;
-        }
-
-        public void decreaseCodes()
-        {
-            int h = Height();
-            while (this.Height() == h)
-            {
-                this.replaceLastNode();
-            }
-        }
-
-        public Node root;
-    }
-
     class Program
     {
         // метод для сравнения листов дерева
@@ -317,7 +70,7 @@ namespace Laba4
             List<Node> queue = new List<Node>();
             foreach (var el in dictionary)
             {
-                Node node = new Node(el.Key, el.Value);
+                Node node = new Node(letter: el.Key, frequency: el.Value);
                 queue.Add(node);
             }
 
@@ -329,7 +82,7 @@ namespace Laba4
                 Node r = queue[1];
                 queue.RemoveAt(0);
                 queue.RemoveAt(0);
-                Node node = new Node('x', l.frequency + r.frequency);
+                Node node = new Node(letter: 'x', frequency: l.frequency + r.frequency);
                 node.left = l;
                 node.right = r;
                 node.left.parent = node;
@@ -338,10 +91,11 @@ namespace Laba4
                 queue.Sort((n1, n2) => Comp(n1, n2));
             }
             Tree HaffMannTree = new Tree(queue[0]);
+            HaffMannTree.setLevels();
 
             // создаём словарь кодов символов
-            Dictionary<char, string> codingTable = new Dictionary<char, string>();
-            HaffMannTree.CodingTable(ref codingTable);
+            Dictionary<char, string> codingTable0 = new Dictionary<char, string>();
+            HaffMannTree.CodingTable(ref codingTable0);
 
             // выводим таблицу частот и вероятности
             using (StreamWriter table1 = new StreamWriter(File.Open("table1.txt", FileMode.Create)))
@@ -354,7 +108,7 @@ namespace Laba4
                     double f = Convert.ToDouble(el.Value);
                     double p = f / originalBook.Length;
                     string probability = p.ToString();
-                    string code = codingTable[el.Key];
+                    string code = codingTable0[el.Key];
 
                     table1.WriteLine(String.Format("symbol = {0}; frequency = {1};" +
                         " probability = {2}; code = {3}; codeLength = {4}",
@@ -367,17 +121,17 @@ namespace Laba4
             //    Console.WriteLine(String.Format("symbol = {0}; code = {1}", el.Key, el.Value));
             //}
 
-            // кодируем книгу
-            using (StreamWriter encodedbook = new StreamWriter(File.Open("encodedBook.txt", FileMode.Create)))
+            // кодируем книгу без ограничения на длину кода
+            using (StreamWriter encodedbook = new StreamWriter(File.Open("encodedBook0.txt", FileMode.Create)))
             {
                 foreach (var symbol in originalBook)
                 {
-                    encodedbook.Write(codingTable[symbol]);
+                    encodedbook.Write(codingTable0[symbol]);
                 }
             }
 
             // раскодируем книгу
-            FileStream fileToDecodeInput = new FileStream("encodedBook.txt", FileMode.Open);
+            FileStream fileToDecodeInput = new FileStream("encodedBook0.txt", FileMode.Open);
             StreamReader bookToDecodeInput = new StreamReader(fileToDecodeInput, Encoding.Default);
             string bookToDecode = bookToDecodeInput.ReadToEnd();
             bookToDecodeInput.Close();
@@ -404,8 +158,43 @@ namespace Laba4
                 }
             }
 
-            // 
-            HaffMannTree.decreaseCodes();
+            // кодируем книгу, уменьшив длину кода на 1
+            HaffMannTree.ReduceLevel();
+            Dictionary<char, string> codingTable1 = new Dictionary<char, string>();
+            HaffMannTree.CodingTable(ref codingTable1);
+            using (StreamWriter encodedbook = new StreamWriter(File.Open("encodedBook1.txt", FileMode.Create)))
+            {
+                foreach (var symbol in originalBook)
+                {
+                    encodedbook.Write(codingTable1[symbol]);
+                }
+            }
+
+            // кодируем книгу, уменьшив длину кода на 2
+            HaffMannTree.setLevels();
+            HaffMannTree.ReduceLevel();
+            Dictionary<char, string> codingTable2 = new Dictionary<char, string>();
+            HaffMannTree.CodingTable(ref codingTable2);
+            using (StreamWriter encodedbook = new StreamWriter(File.Open("encodedBook2.txt", FileMode.Create)))
+            {
+                foreach (var symbol in originalBook)
+                {
+                    encodedbook.Write(codingTable2[symbol]);
+                }
+            }
+
+            // кодируем книгу, уменьшив длину кода на 3
+            HaffMannTree.ReduceLevel();
+            Dictionary<char, string> codingTable3 = new Dictionary<char, string>();
+            HaffMannTree.CodingTable(ref codingTable3);
+            using (StreamWriter encodedbook = new StreamWriter(File.Open("encodedBook3.txt", FileMode.Create)))
+            {
+                foreach (var symbol in originalBook)
+                {
+                    encodedbook.Write(codingTable3[symbol]);
+                }
+            }
+
             Console.ReadKey();
         }
     }
