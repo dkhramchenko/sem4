@@ -67,5 +67,10 @@ namespace laba31
             richTextBox3.Text = l31 + l32 + l33;
             richTextBox3.Text += String.Format("Строгое = {0}", t3.Strict());
         }
+
+        private void RichTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
