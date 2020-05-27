@@ -27,6 +27,9 @@ struct Set
 	// удаление элемента по ключу
 	void deleteNodeByKey(std::string const& key);
 
+	// определяет высоту элемента по ключу
+	int getElementHeightByKey(std::string const& key);
+
 	// печать
 	void print() const;
 
