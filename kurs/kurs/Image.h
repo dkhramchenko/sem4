@@ -23,6 +23,8 @@ struct BITMAPINFOHEADER
     unsigned long YPelsPerMeter; // Разрешающая способность по вертикали
     unsigned long ColorUsed; // Число индексов используемых цветов. Если все цвета = 0
     unsigned long ColorImportant; // Число необходимых цветов = 0
+
+    BITMAPINFOHEADER(char Mode, unsigned short BCount, int Width, int Height);
 };
 
 

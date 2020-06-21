@@ -3,6 +3,11 @@
 
 using namespace std;
 
+BITMAPINFOHEADER::BITMAPINFOHEADER(char Mode, unsigned short BCount, int Width, int Height)
+{
+
+}
+
 Image::Image(char Mode, unsigned short BCount, int Width, int Height)
 {
     /* Ининциализация заголовка изображения, все параметры задаются стандартного или
@@ -60,4 +65,6 @@ Image::Image(char* fileName)
     f = fopen(fileName, "rb"); // необходимо открывать бинарный файл
     fread(&BMFileHeader, sizeof(BITMAPFILEHEADER), 1, f);
     fread(&BMInfoHeader, sizeof(BITMAPINFOHEADER), 1, f);
+    this->BMInfoHeader = BMInfoHeader;
+
 }
