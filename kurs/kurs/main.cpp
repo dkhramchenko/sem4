@@ -34,5 +34,15 @@ int main()
 
 	cout << "Задание 8:" << endl;
 	cout << "Деструктор реализован в листинге кода" << endl;
+
+	// часть 2
+	Image original("original.bmp");
+	Image scaled = original /= 2;
+	scaled.writeimage("scaled.bmp");
+	Image depth1bit = original / 1;
+	depth1bit.writeimage("depth1bit.bmp");
+	Image depth8bit = original / 8;
+	depth8bit.writeimage("depth8bit.bmp")
+
 	return 0;
 }
