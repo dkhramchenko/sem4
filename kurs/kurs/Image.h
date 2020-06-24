@@ -23,6 +23,9 @@ struct BITMAPINFOHEADER
     unsigned long YPelsPerMeter; // Разрешающая способность по вертикали
     unsigned long ColorUsed; // Число индексов используемых цветов. Если все цвета = 0
     unsigned long ColorImportant; // Число необходимых цветов = 0
+
+    BITMAPINFOHEADER();
+    BITMAPINFOHEADER(char Mode, unsigned short BCount, int Width, int Height);
 };
 
 
@@ -41,22 +44,26 @@ struct RGBQUAD
     unsigned char Reserved;
 };
 
-class Image {
+class Image
+{
     BITMAPINFOHEADER BMInfoHeader;
-    RGBTRIPLE** Rgbtriple;
-    // RGBQUAD** Rgbquad;
+    RGBTRIPLE* Rgbtriple;
+    RGBQUAD* Rgbquad;
+    RGBQUAD* Palette;
     /* данные могут храниться и в одномерном массиве RGBTRIPLE *Rgbtriple, при этом
     изменяется способ обращения к пикселу Rgbtriple[i * Width + j] вместо Rgbtriple[i][j]
         RGBQUAD** Rgbquad;*/
 public:
     Image(char Mode, unsigned short BCount, int Width, int Height); // Конструктор создания изображения
     Image(char* fileName); // Конструктор объекта изображения из файла
+    void initialize();
     Image(); // Конструктор без параметров, создает пустой контейнер под изображение
     Image(const Image& i); // Конструктор копии
     ~Image(); // Деструктор
     int loadimage(char* fileName); // метод загрузки изображения аналогичный конструктору
     void writeimage(char* fileName); // метод записи изображения в файл
-    Image operator = (Image Inp); // Перегрузка оператора =
-    // …
+    Image operator=(Image Inp); // Перегрузка оператора =
+    Image operator/=(Image InpImage); // Перегрузка оператора /=(изменение масштаба изображения)
+    Image operator/(short Depth); // Перегрузка оператора /
 };
 
