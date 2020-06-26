@@ -64,6 +64,6 @@ public:
     void writeimage(char* fileName); // метод записи изображения в файл
     Image operator=(Image Inp); // Перегрузка оператора =
     Image operator/=(Image InpImage); // Перегрузка оператора /=(изменение масштаба изображения)
-    Image operator/(short Depth); // Перегрузка оператора /
+    Image operator/(short Depth); // Перегрузка оператора / (изменение глубины цвета)
 };
 
