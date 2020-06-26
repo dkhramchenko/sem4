@@ -151,7 +151,113 @@ Image::Image(char Mode, unsigned short BCount, int Width, int Height)
                 fwrite(&position[Mode], 1, 1, file);
             }
         }
+        if (BCount == 8)
+    {
+        BITMAPFILEHEADER* bitmapfileheader = new BITMAPFILEHEADER;
+        bitmapfileheader->OffsetBits += 256 * 5;
+        bitmapfileheader->Size = (BCount * Height * Width) + bitmapfileheader->OffsetBits;
+        BMInfoHeader.ColorUsed = 256;
+        Palette = new RGBQUAD[256];
+        Rgbquad = new RGBQUAD[BMInfoHeader.Height * BMInfoHeader.Width];
+        fwrite(&bitmapfileheader->Type, sizeof(bitmapfileheader->Type), 1, file);
+        fwrite(&bitmapfileheader->Size, sizeof(bitmapfileheader->Size), 1, file);
+        fwrite(&bitmapfileheader->Reserved1, sizeof(bitmapfileheader->Reserved1), 1, file);
+        fwrite(&bitmapfileheader->Reserved2, sizeof(bitmapfileheader->Reserved2), 1, file);
+        fwrite(&bitmapfileheader->OffsetBits, sizeof(bitmapfileheader->OffsetBits), 1, file);
+        BMInfoHeader.BitCount = BCount;
+        BMInfoHeader.Size = 40;
+        BMInfoHeader.Width = Width;
+        BMInfoHeader.Height = Height;
+        BMInfoHeader.SizeImage = BCount * Width * Height;
+        fwrite(&BMInfoHeader.Size, sizeof(BMInfoHeader.Size), 1, file);
+        fwrite(&BMInfoHeader.Width, sizeof(BMInfoHeader.Width), 1, file);
+        fwrite(&BMInfoHeader.Height, sizeof(BMInfoHeader.Height), 1, file);
+        fwrite(&BMInfoHeader.Planes, sizeof(BMInfoHeader.Planes), 1, file);
+        fwrite(&BMInfoHeader.BitCount, sizeof(BMInfoHeader.BitCount), 1, file);
+        fwrite(&BMInfoHeader.Compression, sizeof(BMInfoHeader.Compression), 1, file);
+        fwrite(&BMInfoHeader.SizeImage, sizeof(BMInfoHeader.SizeImage), 1, file);
+        fwrite(&BMInfoHeader.XPelsPerMeter, sizeof(BMInfoHeader.XPelsPerMeter), 1, file);
+        fwrite(&BMInfoHeader.YPelsPerMeter, sizeof(BMInfoHeader.YPelsPerMeter), 1, file);
+        fwrite(&BMInfoHeader.ColorUsed, sizeof(BMInfoHeader.ColorUsed), 1, file);
+        fwrite(&BMInfoHeader.ColorImportant, sizeof(BMInfoHeader.ColorImportant), 1, file);
+        for (int i = 0; i < 256; ++i)
+        {
+            Palette[i].Red = i;
+            Palette[i].Green = i;
+            Palette[i].Blue = i;
+            Palette[i].Reserved = 0;
+            fwrite(&Palette[i].Red, 1, 1, file);
+            fwrite(&Palette[i].Green, 1, 1, file);
+            fwrite(&Palette[i].Blue, 1, 1, file);
+            fwrite(&Palette[i].Reserved, 1, 1, file);
+        }
+        unsigned char* position = new unsigned char[256];
+        for (int i = 0; i < 256; ++i)
+        {
+            position[i] = i;
+            fwrite(&position[i], 1, 1, file);
+        }
+        for (int i = 0; i < BMInfoHeader.Height; ++i)
+        {
+            for (int j = 0; j < BMInfoHeader.Width; ++j)
+            {
+                fwrite(&position[Mode], 1, 1, file);
+            }
+        }
     }
+        else if (BCount == 4)
+        {
+            BITMAPFILEHEADER* bitmapfileheader = new BITMAPFILEHEADER;
+            bitmapfileheader->OffsetBits += 256 * 5;
+            bitmapfileheader->Size = (BCount * Height * Width) + bitmapfileheader->OffsetBits;
+            BMInfoHeader.ColorUsed = 256;
+            Palette = new RGBQUAD[256];
+            Rgbquad = new RGBQUAD[BMInfoHeader.Height * BMInfoHeader.Width];
+            fwrite(&bitmapfileheader->Type, sizeof(bitmapfileheader->Type), 1, file);
+            fwrite(&bitmapfileheader->Size, sizeof(bitmapfileheader->Size), 1, file);
+            fwrite(&bitmapfileheader->Reserved1, sizeof(bitmapfileheader->Reserved1), 1, file);
+            fwrite(&bitmapfileheader->Reserved2, sizeof(bitmapfileheader->Reserved2), 1, file);
+            fwrite(&bitmapfileheader->OffsetBits, sizeof(bitmapfileheader->OffsetBits), 1, file);
+            BMInfoHeader.BitCount = BCount;
+            BMInfoHeader.Size = 40;
+            BMInfoHeader.Width = Width;
+            BMInfoHeader.Height = Height;
+            BMInfoHeader.SizeImage = BCount * Width * Height;
+            fwrite(&BMInfoHeader.Size, sizeof(BMInfoHeader.Size), 1, file);
+            fwrite(&BMInfoHeader.Width, sizeof(BMInfoHeader.Width), 1, file);
+            fwrite(&BMInfoHeader.Height, sizeof(BMInfoHeader.Height), 1, file);
+            fwrite(&BMInfoHeader.Planes, sizeof(BMInfoHeader.Planes), 1, file);
+            fwrite(&BMInfoHeader.BitCount, sizeof(BMInfoHeader.BitCount), 1, file);
+            fwrite(&BMInfoHeader.Compression, sizeof(BMInfoHeader.Compression), 1, file);
+            fwrite(&BMInfoHeader.SizeImage, sizeof(BMInfoHeader.SizeImage), 1, file);
+            fwrite(&BMInfoHeader.XPelsPerMeter, sizeof(BMInfoHeader.XPelsPerMeter), 1, file);
+            fwrite(&BMInfoHeader.YPelsPerMeter, sizeof(BMInfoHeader.YPelsPerMeter), 1, file);
+            fwrite(&BMInfoHeader.ColorUsed, sizeof(BMInfoHeader.ColorUsed), 1, file);
+            fwrite(&BMInfoHeader.ColorImportant, sizeof(BMInfoHeader.ColorImportant), 1, file);
+            for (int i = 0; i < 256; ++i)
+            {
+                Palette[i].Red = i;
+                Palette[i].Green = i;
+                Palette[i].Blue = i;
+                Palette[i].Reserved = 0;
+                fwrite(&Palette[i].Red, 1, 1, file);
+                fwrite(&Palette[i].Green, 1, 1, file);
+                fwrite(&Palette[i].Blue, 1, 1, file);
+                fwrite(&Palette[i].Reserved, 1, 1, file);
+            }
+            unsigned char* position = new unsigned char[256];
+            for (int i = 0; i < 256; ++i)
+            {
+                position[i] = i;
+                fwrite(&position[i], 1, 1, file);
+            }
+            for (int i = 0; i < BMInfoHeader.Height; ++i)
+            {
+                for (int j = 0; j < BMInfoHeader.Width; ++j)
+                {
+                    fwrite(&position[Mode], 1, 1, file);
+                }
+            }
     cout << "Конструктор отработал успешно!" << endl;
 }
 
